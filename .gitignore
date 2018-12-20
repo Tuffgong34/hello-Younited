@@ -1,2 +1,5 @@
 .vagrant
 alembic.ini
+.vscode
+
+*.pyc
