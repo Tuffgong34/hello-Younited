@@ -2,8 +2,18 @@ from flask import Flask, jsonify, render_template, send_file, request, Markup, a
 import sys
 import random
 from os.path import isfile, join
+from api.login import login_routes
+from api.profile import profile_api_routes
+
+import utils.utils as utils
+
+from pages.profile import profile_page_routes
 
 app = Flask(__name__)
+utils.set_app(app)
+app.register_blueprint(login_routes)
+app.register_blueprint(profile_page_routes)
+app.register_blueprint(profile_api_routes)
 
 @app.route('/')
 @app.route('/index.html')
@@ -26,7 +36,6 @@ def css_get(path):
     if not isfile(fn):
         return render_template('404.html'), 404
     return send_file(fn)
-
 
 @app.route('/js/<path:path>')
 def js_get(path):

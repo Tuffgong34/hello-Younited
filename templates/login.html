@@ -1,0 +1,24 @@
+<html>
+    <head>
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+
+        {% if random %}
+            <link rel='stylesheet' type='text/css' href='/css/main.css?t={% print(random) %}'>
+            <script type='text/javascript' src='js/login.js?t={% print(random) %}'></script>
+            <script type='text/javascript' src='js/yn_cookies.js?t={% print(random) %}'></script>
+        {% else %}
+            <link rel='stylesheet' type='text/css' href='/css/main.css'>
+            <script type='text/javascript' src='/js/login.js'></script>   
+            <script type='text/javascript' src='/js/yn_cookies.js'></script>         
+        {% endif %}
+    </head>
+    <body>
+        <h1>Login page</h1>
+        Email or Phone Number: <input type='text' id='username'><br>
+        Password: <input type='password' id='password'> <br>
+        <div id='error' style='color:red'></div>
+        <button onclick='perform_login()'>Login</button>
+    </body>
+</html>

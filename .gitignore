@@ -3,3 +3,6 @@ alembic.ini
 .vscode
 
 *.pyc
+
+db.json
+creds.json
