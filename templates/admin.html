@@ -1,0 +1,33 @@
+<html>
+    <head>
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+        <script type='text/javascript' src='/js/login_handler.js'></script>
+        <script type='text/javascript' src='/js/yn_cookies.js'></script>
+
+    {% if random %}
+        <link rel='stylesheet' type='text/css' href='/css/main.css?t={% print(random) %}'>
+        <script type='text/javascript' src='/js/admin.js?t={% print(random) %}'></script>
+    {% else %}
+        <link rel='stylesheet' type='text/css' href='/css/main.css'>
+        <script type='text/javascript' src='/js/admin.js'></script>         
+    {% endif %}
+
+    </head>
+    <body>
+        <h1><div id='firstname'></div></h1>
+        <div id='error' style='color:red'></div>
+        <div id='stats'>
+            <!-- User statistics -->
+        </div>
+
+        <div id='league_data'>
+            
+        </div>
+
+        <div id='logged_in_only'>
+            <button onclick='add_a_league()'>Add a league</button>
+        </div>
+    </body>
+</html>

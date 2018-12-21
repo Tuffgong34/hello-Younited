@@ -1,0 +1,39 @@
+<html>
+    <head>
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+        <script type='text/javascript' src='/js/login_handler.js'></script>
+        <script type='text/javascript' src='/js/yn_cookies.js'></script>
+
+    {% if random %}
+        <link rel='stylesheet' type='text/css' href='/css/main.css?t={% print(random) %}'>
+        <script type='text/javascript' src='/js/admin.js?t={% print(random) %}'></script>
+    {% else %}
+        <link rel='stylesheet' type='text/css' href='/css/main.css'>
+        <script type='text/javascript' src='/js/admin.js'></script>         
+    {% endif %}
+
+    </head>
+    <body>
+       <h1><div id='firstname'></div></h1>
+       <div id='error' style='color:red'></div>
+        <h2>Create a new League</h2>
+        <div id='league_form'>
+            Name: <input id='league_name' type='text'><br>
+            Description: <input id='league_description' type='text'><br>
+            Location: <input id='league_location' type='text'><br>
+            Founded: <input id='league_founded' type='date'>
+        </div>
+        <button onclick='submit_league()'>Submit</button>
+        <h2>Create a new Division</h2>
+        <div id='division_form'>
+            Name: <input id='division_name' type='text'><br>
+            Description: <input id='division_description' type='text'><br>
+            Location: <input id='division_location' type='text'><br>
+            League: <select name="division_league" id='division_league'></select><br>
+            Founded: <input id='division_founded' type='date'>
+        </div>
+        <button onclick='submit_division()'>Submit</button>
+    </body>
+</html>

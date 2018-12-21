@@ -1,6 +1,9 @@
 import os
 import json 
 import jwt 
+from flask import request
+from utils.dbutils import get_db_session
+from db.user import User
 
 global_app = None
 global_secret = None
@@ -51,3 +54,48 @@ def get_jwt_secret():
 def decode_jwt_token(token):
     secret = get_jwt_secret()
     return jwt.decode(token, secret, algorithms=['HS256'])
+
+def get_user(request):
+    key = request.headers.get('Authorization')
+    if key is None:
+        return jsonify(status='fail', message='no token provided')
+    
+    token = key.split(" ")[1]
+    if token is None:
+        return jsonify(status='fail', message='failed token check')
+    
+    decode = decode_jwt_token(token)
+
+    if decode['username'] is None:
+        return jsonify(status='fail', message='failed token check')
+    username = decode['username']
+
+    allowed_status = ['admin', 'sadmin']
+
+    session = get_db_session()
+    user = session.query(User).filter_by(email=username).first()
+    if user is None:
+        user = session.query(User).filter_by(phone_number=username).first()
+    
+    return user     
+
+def check_auth_admin(func):
+    def wrapper():
+        user = get_user(request)
+        
+        if user is None:
+            return jsonify(status='fail', message='user does not exist')
+        
+        if not isinstance(user, User):
+            # user is a jsonified error
+            return user
+
+        session = get_db_session()
+
+        if user.status not in allowed_status:
+            print("ERROR: Attempt to use disabled account (id:{} - name:{} - status: {})".format(user.id, user.name, user.status))
+            return jsonify(status='fail', message='unauthorized')
+        
+        func()
+
+    return wrapper
