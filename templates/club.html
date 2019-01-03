@@ -7,30 +7,37 @@
         {% if random %}
             <link rel='stylesheet' type='text/css' href='/css/main.css?t={% print(random) %}'>
             <script type='text/javascript' src='/js/login_handler.js?t={% print(random) %}'></script>
+            <script type='text/javascript' src='/js/club.js?t={% print(random) %}'></script>
             <script type='text/javascript' src='/js/profile.js?t={% print(random) %}'></script>
             <script type='text/javascript' src='/js/yn_cookies.js?t={% print(random) %}'></script>
         {% else %}
             <link rel='stylesheet' type='text/css' href='/css/main.css'>
             <script type='text/javascript' src='/js/login_handler.js'></script>
+            <script type='text/javascript' src='/js/club.js'></script>   
             <script type='text/javascript' src='/js/profile.js'></script>   
             <script type='text/javascript' src='/js/yn_cookies.js'></script>         
         {% endif %}
     </head>
+
     <body>
+        <div id='menu_options'></div>
+        <h1 id='club_name'></h1>
+        <h2 id='club_information'></h2>
+        <h2 id='club_contact'></h2>
+        <div style='color: red' id='error'></div>
+        {% if club_id %}
+            <div id='player_output'>
+                Loading...
+            </div>
+
+            <script>
+                window.club_id = "{% print(club_id) %}";
+            </script>
+        {% else %}
+            <div style='color: red'>
+                <h1>Unknown Club Id</h1>
+            </div>
+        {% endif %}
         
-        <h1>Profile Page</h1>
-        <ul id='menu_options'>
-        </ul>
-        <div id='status'></div>
-        <button onclick='logout()'>Logout</button>
-        <div id='error' style='color:red'></div>
-        <div id='firstname'></div>
-        <div id='lastname'></div>
-        <script>
-            window.ret_url = 'profile';
-            $(document).ready(function(){
-                get_menu_items();
-            });
-        </script>
     </body>
 </html>

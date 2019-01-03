@@ -51,6 +51,10 @@ def get_profile_data():
         {
             "name": "Profile",
             "link": "/profile"
+        },
+        {
+            "name": "Leagues",
+            "link": "/league"
         }
     ]
     if user.status == "sadmin":

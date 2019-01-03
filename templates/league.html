@@ -1,12 +1,45 @@
 <html>
     <head>
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
 
+        {% if random %}
+            <link rel='stylesheet' type='text/css' href='/css/main.css?t={% print(random) %}'>
+            <script type='text/javascript' src='/js/login_handler.js?t={% print(random) %}'></script>
+            <script type='text/javascript' src='/js/league.js?t={% print(random) %}'></script>
+            <script type='text/javascript' src='/js/profile.js?t={% print(random) %}'></script>
+            <script type='text/javascript' src='/js/yn_cookies.js?t={% print(random) %}'></script>
+        {% else %}
+            <link rel='stylesheet' type='text/css' href='/css/main.css'>
+            <script type='text/javascript' src='/js/login_handler.js'></script>
+            <script type='text/javascript' src='/js/league.js'></script>   
+            <script type='text/javascript' src='/js/profile.js'></script>   
+            <script type='text/javascript' src='/js/yn_cookies.js'></script>         
+        {% endif %}
     </head>
 
     <body>
-        Leagues Overview
-        <div id='league_output'>
-            Loading...
-        </div>
+        <div id='menu_options'></div>
+        <h1 id='league_name'></h1>
+        <h2 id='league_description'></h2>
+        <div style='color: red' id='error'></div>
+        {% if league_id %}
+            <div id='league_output'>
+                Loading...
+            </div>
+
+            <script>
+                window.league_id = "{% print(league_id) %}";
+            </script>
+        {% else %}
+            <div id='league_output'>
+                Loading...
+            </div>
+            <script>
+                window.league_id = null;
+            </script>    
+        {% endif %}
+        
     </body>
 </html>

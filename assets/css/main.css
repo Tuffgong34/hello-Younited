@@ -19,11 +19,15 @@ h1{
     background-color: #2f2f2f;
 }
 .league_sub{
+    cursor: pointer;
     padding: 20px;
     margin-left: 10px;
     margin-bottom: 10px;
     border-radius: 5px;
     background-color: #5f5f5f;
+}
+.league_sub:hover{
+    background-color: #888888;
 }
 
 #menu_options li{
@@ -40,4 +44,40 @@ h1{
 }
 #menu_options li:hover{
     background-color: #b5fcfc;
+}
+
+.club_sub{
+    cursor: pointer;
+    padding: 20px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    background-color: #3b3b3b;
+}
+.club_sub:hover{
+    background-color: #888888;
+}
+.player_sub{
+    cursor: pointer;
+    padding: 20px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    background-color: #3b3b3b;
+}
+.player_sub:hover{
+    background-color: #888888;
+}
+.player_club_badge{
+    cursor: pointer;
+    min-width: 150px;
+    height: 50px;
+    background-color: #3b3b3b;
+    border-radius: 10px;
+    font-size: 80%;
+    text-align: center;
+    line-height: 50px;
+}
+.player_club_badge:hover{
+    background-color: #5f5f5f;
 }
