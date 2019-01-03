@@ -18,6 +18,15 @@ $(document).ready(function(){
             if(ret.status == 'ok'){
                 $('#firstname').html(ret.data.firstname);
                 $('#lastname').html(ret.data.lastname);
+                var output = "";
+                for(var i=0; i<ret.data.menu_items.length;i++){
+                    var mi = ret.data.menu_items[i];
+                    var next_item = "<li onclick='link_page(\"" + mi.link + "\")'>";
+                    next_item += mi.name;
+                    next_item += "</li>";
+                    output += next_item;
+                }
+                $('#menu_options').html(output);
             }else{
                 $('#error').html(ret.message);
             }
@@ -32,3 +41,7 @@ $(document).ready(function(){
         dataType: 'json'
     })
 })
+
+function link_page(link){
+    window.location.href = link;
+}

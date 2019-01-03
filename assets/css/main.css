@@ -25,3 +25,19 @@ h1{
     border-radius: 5px;
     background-color: #5f5f5f;
 }
+
+#menu_options li{
+    display:inline-block;
+    text-decoration: none;
+    width: 100px;
+    height: 55px;
+    border-radius: 10px;
+    line-height: 55px;
+    background-color: #7aadad;
+    cursor: pointer;
+    text-align: center;
+    margin-right: 10px;
+}
+#menu_options li:hover{
+    background-color: #b5fcfc;
+}

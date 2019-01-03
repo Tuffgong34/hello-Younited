@@ -46,10 +46,23 @@ def get_profile_data():
     if user.status not in allowed_status:
         print("ERROR: Attempt to use disabled account (id:{} - name:{} - status: {})".format(user.id, user.name, user.status))
         return jsonify(status='fail', message='account has been disabled')
+    # TODO: Add in standard menu items 
+    menu_items = [
+        {
+            "name": "Profile",
+            "link": "/profile"
+        }
+    ]
+    if user.status == "sadmin":
+        menu_items.append({
+            "name": "Admin Page",
+            "link": "/admin"
+        })
 
     data_obj = {
         "firstname": user.first_name,
-        "lastname": user.last_name
+        "lastname": user.last_name,
+        "menu_items": menu_items 
     }
        
     return jsonify(status='ok', data=data_obj)
