@@ -1,0 +1,49 @@
+<html>
+    <head>
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+        <script type='text/javascript' src='/js/login_handler.js'></script>
+        <script type='text/javascript' src='/js/yn_cookies.js'></script>
+
+    {% if random %}
+        <link rel='stylesheet' type='text/css' href='/css/main.css?t={% print(random) %}'>
+        <script type='text/javascript' src='/js/admin.js?t={% print(random) %}'></script>
+    {% else %}
+        <link rel='stylesheet' type='text/css' href='/css/main.css'>
+        <script type='text/javascript' src='/js/admin.js'></script>         
+    {% endif %}
+        <script>
+            window.page_type = 'clubplayer';
+        </script>
+    </head>
+    <body>
+       <h1><div id='firstname'></div></h1>
+       <div id='error' style='color:red'></div>
+       <div id='club_list'></div>
+        <h2>Create a new Club</h2>
+        <div id='club_form'>
+            Name: <input id='club_name' type='text'><br>
+            Information: <input id='club_information' type='text'><br>
+            Contact: <input id='club_contact' type='text'><br>
+            Location: <input id='club_location' type='text'><br>
+            Founded: <input id='club_founded' type='date'><br>
+            Division: <select name="club_division" id='club_division'></select><br>
+        </div>
+        <button onclick='submit_club()'>Submit</button>
+        <br>
+        <h2>Create a new Player</h2>
+        <div id='player_form'>
+            First Name: <input id='player_first_name' type='text'><br>
+            Last Name: <input id='player_last_name' type='text'><br>
+            Shirt Number: <input id='player_shirt_number' type='number'><br>
+            Date Of Birth: <input id='player_date_of_birth' type='date'><br>
+            Height (cm): <input id="player_height_cm" type='number'><br>
+            Club: <select name="player_club" id='player_club'></select><br>
+            Position: <select name="player_position" id='player_position'></select><br>
+            Shirt Color: <input id='player_color' type='color'><br>
+            User ID: <input id='player_user_id' type='number'><br>
+        </div>
+        <button onclick='submit_player()'>Submit</button>
+    </body>
+</html>

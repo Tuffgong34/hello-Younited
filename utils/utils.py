@@ -70,7 +70,6 @@ def get_user(request):
         return jsonify(status='fail', message='failed token check')
     username = decode['username']
 
-    allowed_status = ['admin', 'sadmin']
 
     session = get_db_session()
     user = session.query(User).filter_by(email=username).first()
@@ -82,7 +81,13 @@ def get_user(request):
 def check_auth_admin(func):
     def wrapper():
         user = get_user(request)
-        
+
+        allowed_status = ['admin', 'sadmin']
+
+        if user.status not in allowed_status:
+            print("ERROR: unauthorized access of resource attempted")
+            return jsonify(status='fail', message='unauthorized', authorized=False)
+
         if user is None:
             return jsonify(status='fail', message='user does not exist')
         

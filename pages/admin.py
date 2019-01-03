@@ -37,3 +37,17 @@ def get_league_admin_page():
     #     template_name = 'mobile/create_user.mobile.html'
 
     return render_template(template_name, random=rand, back_url='/')
+
+@admin_page_routes.route('/admin/club', methods=['GET'])
+def get_club_admin_page():
+    rand = None
+    app = utils.get_app()
+    if app.debug != False:
+        rand = random.random()
+
+    template_name = 'admin/club_player_admin.html'
+
+    # if utils.is_on_mobile(request.headers.get('User-Agent')):
+    #     template_name = 'mobile/create_user.mobile.html'
+
+    return render_template(template_name, random=rand, back_url='/')

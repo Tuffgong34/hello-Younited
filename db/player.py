@@ -19,7 +19,9 @@ class Player(Base):
     yn_user_id = Column(Integer)
     created_at = Column(TIMESTAMP)
 
-    def __init__(self):
+    def __init__(self, last_name, club_id):
+        self.club_id = club_id
+        self.last_name = last_name
         self.created_at = datetime.datetime.now()
 
     def __repr__(self):

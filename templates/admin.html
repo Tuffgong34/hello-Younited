@@ -13,7 +13,9 @@
         <link rel='stylesheet' type='text/css' href='/css/main.css'>
         <script type='text/javascript' src='/js/admin.js'></script>         
     {% endif %}
-
+        <script>
+            window.page_type = "main_admin";
+        </script>
     </head>
     <body>
         <h1><div id='firstname'></div></h1>
@@ -23,11 +25,12 @@
         </div>
 
         <div id='league_data'>
-            
+
         </div>
 
         <div id='logged_in_only'>
-            <button onclick='add_a_league()'>Add a league</button>
+            <button onclick='add_a_league()'>Add a league</button>  
+            <button onclick='add_a_club()'>Add a Club/Player</button>
         </div>
     </body>
 </html>
