@@ -1,9 +1,9 @@
 import os
 
 # directory = "C:\\Users\\PhilJeffes\\Documents\\younited_scraping"
-directory = "./"
+directory = "./data/player_stats"
 for filename in os.listdir(directory):
-    if filename.startswith("league") and filename.endswith(".html"):
+    if filename.endswith(".html"):
         fn = os.path.join(directory, filename)
         print(fn)
         with open(fn) as f:
