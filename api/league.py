@@ -99,7 +99,8 @@ def get_league_data(league_id):
     if league is None:
         return jsonify(status='fail', message='league does not exist')
 
-    divisions = session.query(Division).all()
+    divisions = session.query(Division).filter_by(league_id=league.id).all()
+    
     div_out = []
     for d in divisions:
         next_div = {
