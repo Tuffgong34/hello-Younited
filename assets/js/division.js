@@ -28,6 +28,12 @@ $(document).ready(function(){
                         if(c.home_shirt != undefined && c.home_shirt!=null){
                             next_item += get_shirt_span(c.home_shirt)
                         }
+                        if(c.away_shirt != undefined && c.away_shirt!=null){
+                            next_item += get_shirt_span(c.away_shirt)
+                        }
+                        if(c.goalkeeper_shirt != undefined && c.goalkeeper_shirt!=null){
+                            next_item += get_shirt_span(c.goalkeeper_shirt)
+                        }
 
                         next_item += c.name;
                         if(c.location != null){

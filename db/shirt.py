@@ -14,7 +14,7 @@ class Shirt(Base):
     secondary_color = Column(String(40))
     
     def __init__(self, style, primary):
-        allowed_styles = ['solid', 'solid_arm', 'stripes', 'hoops']
+        allowed_styles = ['solid', 'solid_arms', 'stripes', 'hoops']
         if style not in allowed_styles:
             print("ERROR: Unknown style {}".format(style))
 
