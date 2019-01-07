@@ -62,7 +62,14 @@ def get_profile_data():
             "name": "Admin Page",
             "link": "/admin"
         })
-
+        menu_items.append({
+            "name": "Shirt Design",
+            "link": "/admin/shirt"
+        })
+    menu_items.append({
+        "name": "Log out",
+        "link": "/logout"
+    })
     data_obj = {
         "firstname": user.first_name,
         "lastname": user.last_name,

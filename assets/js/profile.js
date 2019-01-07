@@ -42,7 +42,7 @@ $(document).ready(function(){
     // })
 })
 
-function get_menu_items(){
+function get_menu_items(){ 
     $.ajax({
         type: "GET",
         url: '/api/profile',

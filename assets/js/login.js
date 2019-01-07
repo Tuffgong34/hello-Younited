@@ -39,7 +39,11 @@ function perform_login(){
                 // Store the token locally ret.token
                 const redirect_page = urlParams.get('r');
                 if(redirect_page != undefined && redirect_page != ""){
-                    window.location.href='/' + redirect_page;
+                    if(redirect_page.startsWith('/')){
+                        window.location.href=redirect_page;
+                    }else{
+                        window.location.href='/' + redirect_page;
+                    }
                 }else{
                     window.location.href='/profile';
                 }
@@ -54,7 +58,3 @@ function perform_login(){
         dataType: 'json'
     })
 }   
-
-function get_menu_items(){
-    
-}

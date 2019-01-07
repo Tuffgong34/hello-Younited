@@ -15,6 +15,10 @@ class Club(Base):
     location = Column(String)
     division_id = Column(Integer)    
     created_at = Column(TIMESTAMP)
+    home_shirt_id = Column(Integer)
+    away_shirt_id = Column(Integer)
+    goalkeeper_shirt_id = Column(Integer)
+    logo_filename = Column(String)
 
     def __init__(self, name, divison_id):
         self.name = name

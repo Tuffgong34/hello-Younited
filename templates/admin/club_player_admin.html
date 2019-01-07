@@ -9,18 +9,21 @@
     {% if random %}
         <link rel='stylesheet' type='text/css' href='/css/main.css?t={% print(random) %}'>
         <script type='text/javascript' src='/js/admin.js?t={% print(random) %}'></script>
+        <script type='text/javascript' src='/js/profile.js?t={% print(random) %}'></script>
     {% else %}
         <link rel='stylesheet' type='text/css' href='/css/main.css'>
-        <script type='text/javascript' src='/js/admin.js'></script>         
+        <script type='text/javascript' src='/js/admin.js'></script> 
+        <script type='text/javascript' src='/js/profile.js'></script>            
     {% endif %}
         <script>
             window.page_type = 'clubplayer';
         </script>
     </head>
     <body>
+        <div id='menu_options'></div>
        <h1><div id='firstname'></div></h1>
        <div id='error' style='color:red'></div>
-       <div id='club_list'></div>
+       <div id='club_list' style='max-height: 200px; overflow-y:scroll'></div>
         <h2>Create a new Club</h2>
         <div id='club_form'>
             Name: <input id='club_name' type='text'><br>

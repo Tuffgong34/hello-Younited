@@ -8,6 +8,7 @@ from api.profile import profile_api_routes
 from api.admin import admin_api_routes
 from api.league import league_api_routes
 from api.club import club_api_routes
+from api.shirt import shirt_api_routes
 
 import utils.utils as utils
 
@@ -24,6 +25,7 @@ app.register_blueprint(profile_api_routes)
 app.register_blueprint(admin_api_routes)
 app.register_blueprint(league_api_routes)
 app.register_blueprint(club_api_routes)
+app.register_blueprint(shirt_api_routes)
 
 app.register_blueprint(admin_page_routes)
 app.register_blueprint(league_page_routes)
@@ -58,6 +60,21 @@ def js_get(path):
     if not isfile(fn):
         return render_template('404.html'), 404
     return send_file(fn)
+
+@app.route('/logout')
+def show_logged_out():
+    rand = None
+    if app.debug != False:
+        rand = random.random()
+
+    template_name = 'logged_out.html'
+
+    return render_template(template_name, debug=app.debug, random=rand)
+ 
+
+@app.route('/favicon.ico')
+def get_favicon():
+    return send_file('img/favicon.ico')
 
 if __name__ == '__main__':
     debug = False

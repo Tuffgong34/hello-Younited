@@ -18,13 +18,33 @@ $(document).ready(function(){
                 if(ret.status == 'ok'){
                     $('#club_name').html(ret.data.club.name);
                     $('#club_information').html(ret.data.club.information);
-                    $('#club_contact').html("Contact: " + ret.data.club.contact);
-                    
+                    if(ret.data.club.contact != null){
+                        $('#club_contact').html("Contact: " + ret.data.club.contact);
+                    }else{
+                        $("#club_contact").html("No contact information available");
+                    }
+                    var club = ret.data.club;
                     var output = "";
                     for(var i=0; i<ret.data.players.length; i++){
                         var p = ret.data.players[i];
-                        var next_item = "<div class='player_sub' onclick='load_player(" + p.id + ")'>";
-                        next_item += "<h2>" + p.first_name + " " + p.last_name;
+                        var next_item = "";
+                       
+                        next_item += "<div class='player_sub' onclick='load_player(" + p.id + ")'>";
+                        next_item += "<h2>";
+                        if(p.position.name == "Goalkeeper" && club.goalkeeper_shirt != null){
+                            var shirt = get_shirt_span(club.goalkeeper_shirt, p.shirt_number);
+                            next_item += shirt;
+                        }else if(club.home_shirt != null){
+                            var shirt = get_shirt_span(club.home_shirt, p.shirt_number);
+                            next_item += shirt;
+                        }
+                        next_item += p.first_name + " " + p.last_name;
+                        console.log(p);
+                        if(p.shirt_number == undefined){
+                            p.shirt_number = 0;
+                        }
+                        // console.log(club.goalkeeper_shirt);
+                        
                         next_item += "</h2>";
                         if(p.position != undefined && p.position != null && p.position.name != undefined && p.position.name != "" && p.position.name != null){
                             next_item += "Position: " + p.position.name;

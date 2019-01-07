@@ -15,7 +15,7 @@ class Player(Base):
     height_cm = Column(Integer)
     club_id = Column(Integer)    
     position_id = Column(Integer)
-    shirt_color = Column(String(10))
+    profile_filename = Column(String(200))
     yn_user_id = Column(Integer)
     created_at = Column(TIMESTAMP)
 

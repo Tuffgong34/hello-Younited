@@ -11,6 +11,7 @@ from db.club import Club
 from db.division import Division
 from db.player import Player
 from db.position import Position
+from db.shirt import Shirt
 
 import random 
 import smtplib 
@@ -63,8 +64,47 @@ def get_club_data(club_id):
         "name": club.name,
         "information": club.information,
         "founded": club.founded,
-        "contact": club.contact
+        "contact": club.contact,
+        "home_shirt": None,
+        "away_shirt": None,
+        "goalkeeper_shirt": None
     }
+    if club.home_shirt_id is not None:
+        shirt = session.query(Shirt).filter_by(id=club.home_shirt_id).first()
+        if shirt is None:
+            print("ERROR: Unknown home_shirt_id {} for club_id {}".format(club.home_shirt_id, club.id))
+        else:
+            home_shirt = {
+                "style": shirt.style,
+                "primary_color": shirt.primary_color,
+                "secondary_color": shirt.secondary_color
+            }
+            club_out['home_shirt'] = home_shirt
+
+    if club.away_shirt_id is not None:
+        shirt = session.query(Shirt).filter_by(id=club.away_shirt_id).first()
+        if shirt is None:
+            print("ERROR: Unknown away_shirt_id {} for club_id {}".format(club.away_shirt_id, club.id))
+        else:
+            away_shirt = {
+                "style": shirt.style,
+                "primary_color": shirt.primary_color,
+                "secondary_color": shirt.secondary_color
+            }
+            club_out['away_shirt'] = away_shirt
+
+    if club.goalkeeper_shirt_id is not None:
+        shirt = session.query(Shirt).filter_by(id=club.goalkeeper_shirt_id).first()
+        if shirt is None:
+            print("ERROR: Unknown goalkeeper_shirt_id {} for club_id {}".format(club.goalkeeper_shirt_id, club.id))
+        else:
+            goalkeeper_shirt = {
+                "style": shirt.style,
+                "primary_color": shirt.primary_color,
+                "secondary_color": shirt.secondary_color
+            }
+            club_out['goalkeeper_shirt'] = goalkeeper_shirt
+
     players_out = []
     for p in players:
         position = session.query(Position).filter_by(id=p.position_id).first()
@@ -72,7 +112,8 @@ def get_club_data(club_id):
         if position is not None:
             next_position["name"] = position.name
         else:
-            print("Player without position {}".format(p.id))
+            pass
+            # print("Player without position {}".format(p.id))
         next_player = {
             "id": p.id,
             "first_name": p.first_name,
@@ -124,7 +165,8 @@ def get_player_data(player_id):
     
     position = session.query(Position).filter_by(id=player.position_id).first()
     if position is None:
-        print("Player without position {}".format(player.id))
+        pass
+        # print("Player without position {}".format(player.id))
     
     club = session.query(Club).filter_by(id=player.club_id).first()
 
@@ -143,7 +185,22 @@ def get_player_data(player_id):
         "shirt_number": player.shirt_number,
         "date_of_birth": player.date_of_birth,
         "height": player.height_cm,
-        "shirt_color": player.shirt_color,
+        "home_shirt": {
+            "style": "",
+            "primary_color": "",
+            "secondary_color": "",
+        },
+        "away_shirt": {
+            "style": "",
+            "primary_color": "",
+            "secondary_color": "",
+        },
+        "goalkeeper_shirt": {
+            "style": "",
+            "primary_color": "",
+            "secondary_color": ""
+        },
+        # "shirt_color": player.shirt_color,
         "claimed": False,
         "club": club_out
     }

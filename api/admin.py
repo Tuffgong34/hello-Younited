@@ -302,7 +302,6 @@ def post_player():
         except:
             return jsonify(status='fail', message='position id must be a number')
 
-    shirt_color = data['shirt_color']
     yn_user_id = data['user_id']
     if yn_user_id is not None and yn_user_id != "":
         try:
@@ -321,8 +320,6 @@ def post_player():
         player.height_cm = height_cm
     if position_id is not None:
         player.position_id = position_id
-    if shirt_color is not None and shirt_color != "":
-        player.shirt_color = shirt_color
     if yn_user_id is not None and yn_user_id != "":
         player.yn_user_id = yn_user_id
 

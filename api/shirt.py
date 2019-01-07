@@ -6,11 +6,7 @@ from utils.dbutils import get_db_session
 import utils.utils as utils
 import bcrypt
 from db.user import User
-from db.league import League
-from db.club import Club
-from db.division import Division
 from db.shirt import Shirt
-
 import random 
 import smtplib 
 
@@ -20,10 +16,10 @@ import base64
 
 import uuid
 
-league_api_routes = Blueprint('league_api_routes', __name__)
+shirt_api_routes = Blueprint('shirt_api_routes', __name__)
 
-@league_api_routes.route('/api/leagues', methods=['GET'])
-def get_all_leagues_data():
+@shirt_api_routes.route('/api/shirt/<int:shirt_id>', methods=['GET'])
+def get_shirt_data(shirt_id):
     key = request.headers.get('Authorization')
     if key is None:
         return jsonify(status='fail', message='no token provided')
@@ -51,24 +47,21 @@ def get_all_leagues_data():
     if user.status not in allowed_status:
         print("ERROR: Attempt to use disabled account (id:{} - name:{} - status: {})".format(user.id, user.name, user.status))
         return jsonify(status='fail', message='account has been disabled')
-    leagues = session.query(League).all()
-    league_out = []
-    for l in leagues:
-        next_league = {
-            "id": l.id,
-            "name": l.name,
-            "description": l.description,
-            "location": l.location
-        }
-        league_out.append(next_league)
+
+    shirt = session.query(Shirt).filter_by(phone_number=username).first()
+    if shirt is None:
+        return jsonify(status='fail', message='shirt does not exist')
+
     data_obj = {
-        "leagues": league_out
+        "style": shirt.style,
+        "primary_color": shirt.primary_color,
+        "secondary_color": shirt.secondary_color
     }
-       
+
     return jsonify(status='ok', data=data_obj)
 
-@league_api_routes.route('/api/league/<int:league_id>', methods=['GET'])
-def get_league_data(league_id):
+@shirt_api_routes.route('/api/shirt', methods=['GET'])
+def get_all_shirt_data():
     key = request.headers.get('Authorization')
     if key is None:
         return jsonify(status='fail', message='no token provided')
@@ -96,37 +89,31 @@ def get_league_data(league_id):
     if user.status not in allowed_status:
         print("ERROR: Attempt to use disabled account (id:{} - name:{} - status: {})".format(user.id, user.name, user.status))
         return jsonify(status='fail', message='account has been disabled')
-    league = session.query(League).filter_by(id=league_id).first()
-    if league is None:
-        return jsonify(status='fail', message='league does not exist')
 
-    divisions = session.query(Division).filter_by(league_id=league.id).all()
+    shirts = session.query(Shirt).all()
     
-    div_out = []
-    for d in divisions:
-        next_div = {
-            "id": d.id,
-            "name": d.name,
-            "description": d.description,
-            "location": d.location,
-            "founded": d.founded
+    shirts_list = []
+    for shirt in shirts:
+        next_shirt = {
+            "id": shirt.id,
+            "style": shirt.style,
+            "primary_color": shirt.primary_color,
+            "secondary_color": shirt.secondary_color
         }
-        div_out.append(next_div)
-    league_out = {
-        "name": league.name,
-        "description": league.description,
-        "founded": league.founded,
-        "location": league.location
-    }
+        shirts_list.append(next_shirt)
+
     data_obj = {
-        "league": league_out,
-        "divisions": div_out
+        "shirts": shirts_list
     }
-       
+
     return jsonify(status='ok', data=data_obj)
 
-@league_api_routes.route('/api/division/<int:div_id>', methods=['GET'])
-def get_division_data(div_id):
+@shirt_api_routes.route('/api/shirt', methods=['POST'])
+def post_shirt():
+    data = request.values
+    if data is None or len(data)==0:
+        data = request.get_json(force=True)
+
     key = request.headers.get('Authorization')
     if key is None:
         return jsonify(status='fail', message='no token provided')
@@ -155,52 +142,21 @@ def get_division_data(div_id):
         print("ERROR: Attempt to use disabled account (id:{} - name:{} - status: {})".format(user.id, user.name, user.status))
         return jsonify(status='fail', message='account has been disabled')
     
-    division = session.query(Division).filter_by(id=div_id).first()
-    if division is None:
-        return jsonify(status='fail', message='division does not exist')
+    style = data['style']
+    if style is None or style == "":
+        return jsonify(status='fail', message='must provide a style')
+    
+    primary = data['primary_color']
+    if primary is None or primary == "":
+        return jsonfiy(status='fail', message='primary color cannot be none')
 
-    clubs = session.query(Club).filter_by(division_id=div_id).all()
+    secondary = data['secondary_color']
 
-    clubs_out = []
-    for c in clubs:
-        next_club = {
-            "id": c.id,
-            "name": c.name,
-            "contact": c.contact,
-            "location": c.location,
-            "founded": c.founded,
-            "information": c.information
-        }
-        if c.home_shirt_id is not None:
-            shirt = session.query(Shirt).filter_by(id=c.home_shirt_id).first()
-            if shirt is not None:
-                next_shirt = {
-                    "style": shirt.style,
-                    "primary_color": shirt.primary_color,
-                    "secondary_color": shirt.secondary_color
-                }
-                next_club['home_shirt'] = next_shirt
-        
-        if c.goalkeeper_shirt_id is not None:
-            shirt = session.query(Shirt).filter_by(id=c.goalkeeper_shirt_id).first()
-            if shirt is not None:
-                next_shirt = {
-                    "style": shirt.style,
-                    "primary_color": shirt.primary_color,
-                    "secondary_color": shirt.secondary_color
-                }
-                next_club['goalkeeper_shirt'] = next_shirt
-                
-        clubs_out.append(next_club)
-    division_out = {
-        "name": division.name,
-        "description": division.description,
-        "founded": division.founded,
-        "location": division.location
-    }
-    data_obj = {
-        "division": division_out,
-        "clubs": clubs_out
-    }
-       
-    return jsonify(status='ok', data=data_obj)
+    shirt = Shirt(style, primary)
+    if secondary != "":
+        shirt.secondary_color = secondary
+
+    session.add(shirt)
+    session.commit()
+
+    return jsonify(status='ok', shirt_id=shirt.id)

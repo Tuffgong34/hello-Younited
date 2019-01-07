@@ -7,38 +7,34 @@
         {% if random %}
             <link rel='stylesheet' type='text/css' href='/css/main.css?t={% print(random) %}'>
             <script type='text/javascript' src='/js/login_handler.js?t={% print(random) %}'></script>
-            <script type='text/javascript' src='/js/division.js?t={% print(random) %}'></script>
-            <script type='text/javascript' src='/js/profile.js?t={% print(random) %}'></script>
+            <script type='text/javascript' src='/js/shirt.js?t={% print(random) %}'></script>
             <script type='text/javascript' src='/js/shirt_tools.js?t={% print(random) %}'></script>
+            <script type='text/javascript' src='/js/profile.js?t={% print(random) %}'></script>
             <script type='text/javascript' src='/js/yn_cookies.js?t={% print(random) %}'></script>
         {% else %}
             <link rel='stylesheet' type='text/css' href='/css/main.css'>
             <script type='text/javascript' src='/js/login_handler.js'></script>
-            <script type='text/javascript' src='/js/division.js'></script>   
-            <script type='text/javascript' src='/js/profile.js'></script>   
+            <script type='text/javascript' src='/js/shirt.js'></script>   
             <script type='text/javascript' src='/js/shirt_tools.js'></script>   
+            <script type='text/javascript' src='/js/profile.js'></script>   
             <script type='text/javascript' src='/js/yn_cookies.js'></script>         
         {% endif %}
     </head>
 
     <body>
         <div id='menu_options'></div>
-        <h1 id='division_name'></h1>
-        <h2 id='division_description'></h2>
+        <div id='shirt_out' style='margin-top: 20px;'></div>
         <div style='color: red' id='error'></div>
-        {% if div_id %}
-            <div id='club_output'>
-                Loading...
-            </div>
-
-            <script>
-                window.division_id = "{% print(div_id) %}";
-            </script>
-        {% else %}
-            <div style='color: red'>
-                <h1>Unknown Divison Id</h1>
-            </div>
-        {% endif %}
+        <select id='style' onchange='update_style()'>
+            <option value='solid'>Solid</option>
+            <option value='solid_arms'>Solid (Arm Ornament)</option>
+            <option value='stripes'>Stripes</option>
+            <option value='hoops'>Hoops</option>
+        </select>
+        <br>
+        Primary: <input id='primary' type='color'><br>
+        Secondary: <input id='secondary' type='color'><br>
+        <button onclick='save_shirt()'>Save</button>
         
     </body>
 </html>

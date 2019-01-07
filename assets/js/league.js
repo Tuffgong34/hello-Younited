@@ -62,7 +62,9 @@ $(document).ready(function(){
                         var l = ret.data.leagues[i];
                         console.log(l.name);
                         var next_item = "<div class='league_sub' onclick='load_league(" + l.id + ")'>";
-                        next_item += "<h2>" + l.name;
+                        next_item += "<h2>";
+                        
+                        next_item += l.name;
                         if(l.location != null){
                             next_item +=  " [ " + l.location + "]";
                         }

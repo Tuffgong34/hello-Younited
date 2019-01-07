@@ -204,6 +204,9 @@ $(document).ready(function(){
             dataType: 'json'
         })
     }
+
+    // Finally setup the menu
+    get_menu_items();
 });
 
 function submit_league(){
@@ -298,6 +301,7 @@ function submit_division(){
         dataType: 'json'
     });
 }
+
 function submit_club(){
     $('#error').html("");
     var name = $('#club_name').val();
@@ -372,7 +376,7 @@ function submit_player(){
     if(club != undefined && club!= ""){
         club = parseInt(club);
     }
-    var shirt_color = $('#player_color').val();
+    // var shirt_color = $('#player_color').val();
     var user_id = $('#player_user_id').val();
     if(user_id != undefined && user_id!= ""){
         user_id = parseInt(user_id);
@@ -401,7 +405,7 @@ function submit_player(){
         user_id: user_id,
         position_id: position_id
     }
-    console.log(data);
+    // console.log(data);
     $.ajax({
         type: "POST",
         url: '/api/player',

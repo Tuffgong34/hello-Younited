@@ -82,3 +82,30 @@ h1{
 .player_club_badge:hover{
     background-color: #5f5f5f;
 }
+.button{
+    display:inline-block;
+    text-decoration: none;
+    width: 100px;
+    height: 55px;
+    border-radius: 10px;
+    line-height: 55px;
+    background-color: #7aadad;
+    cursor: pointer;
+    text-align: center;
+    margin-right: 10px;
+}
+
+.shirt_desc{
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    border-radius: 5px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    margin-left: 5px;
+    text-align: center;
+    line-height: 50px;
+}
+.shirt_desc:hover{
+    color: black;
+}

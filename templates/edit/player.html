@@ -7,36 +7,40 @@
         {% if random %}
             <link rel='stylesheet' type='text/css' href='/css/main.css?t={% print(random) %}'>
             <script type='text/javascript' src='/js/login_handler.js?t={% print(random) %}'></script>
-            <script type='text/javascript' src='/js/division.js?t={% print(random) %}'></script>
+            <script type='text/javascript' src='/js/player.js?t={% print(random) %}'></script>
             <script type='text/javascript' src='/js/profile.js?t={% print(random) %}'></script>
-            <script type='text/javascript' src='/js/shirt_tools.js?t={% print(random) %}'></script>
             <script type='text/javascript' src='/js/yn_cookies.js?t={% print(random) %}'></script>
+            <script type='text/javascript' src='/js/edit.js?t={% print(random) %}'></script>
+            
         {% else %}
             <link rel='stylesheet' type='text/css' href='/css/main.css'>
             <script type='text/javascript' src='/js/login_handler.js'></script>
-            <script type='text/javascript' src='/js/division.js'></script>   
+            <script type='text/javascript' src='/js/player.js'></script>   
             <script type='text/javascript' src='/js/profile.js'></script>   
-            <script type='text/javascript' src='/js/shirt_tools.js'></script>   
-            <script type='text/javascript' src='/js/yn_cookies.js'></script>         
+            <script type='text/javascript' src='/js/yn_cookies.js'></script> 
+            <script type='text/javascript' src='/js/edit.js'></script>         
         {% endif %}
     </head>
 
     <body>
         <div id='menu_options'></div>
-        <h1 id='division_name'></h1>
-        <h2 id='division_description'></h2>
+        
         <div style='color: red' id='error'></div>
-        {% if div_id %}
-            <div id='club_output'>
-                Loading...
-            </div>
+        {% if player_id %}
+            First Name: <input id='player_first_name'></input>
+            Last Name: <input id='player_last_name'></input>
+            Height (cm): <input type='number' id='player_height'></input>
+            Shirt Number: <input type='number' id='player_shirt_number'></input>
+            <h3 id='player_club'></h3>
+            <h3 id='player_shirt_color'></h3>
+            <h3 id='player_position'></h3>
 
             <script>
-                window.division_id = "{% print(div_id) %}";
+                window.player_id = "{% print(player_id) %}";
             </script>
         {% else %}
             <div style='color: red'>
-                <h1>Unknown Divison Id</h1>
+                <h1>Unknown Player Id</h1>
             </div>
         {% endif %}
         

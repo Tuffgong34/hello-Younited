@@ -24,7 +24,12 @@ $(document).ready(function(){
                     for(var i=0; i<ret.data.clubs.length; i++){
                         var c = ret.data.clubs[i];
                         var next_item = "<div class='club_sub' onclick='load_club(" + c.id + ")'>";
-                        next_item += "<h2>" + c.name;
+                        next_item += "<h2>";
+                        if(c.home_shirt != undefined && c.home_shirt!=null){
+                            next_item += get_shirt_span(c.home_shirt)
+                        }
+
+                        next_item += c.name;
                         if(c.location != null){
                             next_item +=  " [ " + c.location + "]";
                         }
