@@ -7,3 +7,4 @@ alembic.ini
 db.json
 creds.json
 pem_keys
+.vs
