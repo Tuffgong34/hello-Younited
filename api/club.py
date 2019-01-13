@@ -202,8 +202,13 @@ def get_player_data(player_id):
         },
         # "shirt_color": player.shirt_color,
         "claimed": False,
-        "club": club_out
+        "club": club_out,
+        
+         "profile_pic": None
     }
+    if player.profile_filename is not None and player.profile_filename.strip() != "":
+        player_out['profile_pic'] = player.profile_filename
+
 
     if position is not None:
         player_out["position"] = position.name
