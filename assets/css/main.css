@@ -1,7 +1,12 @@
 body{
     font-family: arial;
-    background-color: green;
+    background-color: black;
     color: white;
+    background-image: url('/img/background.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    min-height: 100%;
 }
 
 h1{
@@ -60,9 +65,9 @@ h1{
 }
 .player_sub{
     cursor: pointer;
-    padding: 20px;
+    padding: 1px;
     margin-left: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     border-radius: 5px;
     background-color: #3b3b3b;
 }
@@ -108,4 +113,20 @@ h1{
 }
 .shirt_desc:hover{
     color: black;
+}
+#player_picture{
+    width: 100px;
+    height: 100px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    border-radius: 5px;
+    display:inline-block;
+}
+.player_profile_item{
+    display:inline-block;
+    padding: 5px; 
+    /* padding-right: 5px; */
+    background-color: #3b3b3b;
+    border-radius: 5px;
 }

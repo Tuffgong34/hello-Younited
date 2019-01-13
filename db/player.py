@@ -18,6 +18,9 @@ class Player(Base):
     profile_filename = Column(String(200))
     yn_user_id = Column(Integer)
     created_at = Column(TIMESTAMP)
+    age = Column(Integer)
+    age_added = Column(Date)
+    dominant_foot = Column(String(10)) # left, right, none
 
     def __init__(self, last_name, club_id):
         self.club_id = club_id

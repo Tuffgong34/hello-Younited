@@ -7,6 +7,8 @@ $(document).ready(function(){
     window.token = token;
     
     get_menu_items();
+    
+    $('#player_picture').show();
 
     if(window.player_id != null && window.player_id != ""){
         var url = '/api/player/' + window.player_id;
@@ -19,17 +21,57 @@ $(document).ready(function(){
                 if(ret.status == 'ok'){
                     var player = ret.data.player;
                     $('#player_name').html(player.first_name + " " + player.last_name);
-                    $('#player_height').html("Height: " + player.height + "cm");
-                    $('#player_shirt_number').html("Shirt Number: "  + player.shirt_number);
+                    if(player.height != null){
+                        $('#player_height').html("Height: " + player.height + "cm");
+                    }else{
+                        $('#player_height').html("Height: Unknown");    
+                    }
+                    if(player.shirt_number != null){
+                        $('#player_shirt_number').html("Shirt Number: "  + player.shirt_number);
+                    }else{
+                        $('#player_shirt_number').html("Shirt Number: Unknown");
+                    }
                     if(player.club.id != null){
                         var output = "<div class='player_club_badge' onclick='load_club(" + player.club.id +")'>";
                         output += player.club.name;
                         output += "</div>";
 
                         $('#player_club').html(output);
+
+                        if(player.profile_pic != undefined && player.profile_pic != null){
+                            $('#player_picture').show();
+                            $('#player_picture').css({'background-image': 'url("' + player.profile_pic + '")'})
+                            // var img_html = "<img class='player_profile_pic' src='" + player.profile_pic + "'>"
+                            // $('#player_picture').html(img_html);
+                        }else{
+                            $('#player_picture').show();
+                            $('#player_picture').css({'background-image': 'url("/img/placeholder_profile_image.png")'})
+                            
+                        }
                     }
-                    $('#player_shirt_color').html(player.shirt_color);
-                    $('#player_position').html("Position: " + player.position);
+                    var shirt = null;
+                    if(player.position != undefined && player.position != null && player.position.name == "Goalkeeper"){
+                        if(player.goalkeeper_shirt != null){
+                            shirt = get_shirt_span(player.goalkeeper_shirt, player.shirt_number);
+                        }
+                    }else{
+                        shirt = get_shirt_span(player.home_shirt, player.shirt_number);
+                        if(player.away_shirt != null){
+                            shirt += get_shirt_span(player.away_shirt, player.shirt_number);
+                        }
+                    }
+                    
+                    if(shirt != null){
+                        console.log(shirt);
+                        $('#player_shirt_color').html(shirt);
+                    }
+                    
+                    // $('#player_shirt_color').html(player.shirt_color);
+                    if(player.position != null){
+                        $('#player_position').html("Position: " + player.position);
+                    }else{
+                        $('#player_position').html("Position: Not Set");    
+                    }
                     // TODO: Allow users to claim the player if they can
      
                 }else{

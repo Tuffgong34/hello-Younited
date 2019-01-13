@@ -9,11 +9,13 @@
             <script type='text/javascript' src='/js/login_handler.js?t={% print(random) %}'></script>
             <script type='text/javascript' src='/js/player.js?t={% print(random) %}'></script>
             <script type='text/javascript' src='/js/profile.js?t={% print(random) %}'></script>
+            <script type='text/javascript' src='/js/shirt_tools.js?t={% print(random) %}'></script>
             <script type='text/javascript' src='/js/yn_cookies.js?t={% print(random) %}'></script>
         {% else %}
             <link rel='stylesheet' type='text/css' href='/css/main.css'>
             <script type='text/javascript' src='/js/login_handler.js'></script>
             <script type='text/javascript' src='/js/player.js'></script>   
+            <script type='text/javascript' src='/js/shirt_tools.js'></script>   
             <script type='text/javascript' src='/js/profile.js'></script>   
             <script type='text/javascript' src='/js/yn_cookies.js'></script>         
         {% endif %}
@@ -25,12 +27,16 @@
         <div style='color: red' id='error'></div>
         {% if player_id %}
             <h1 id='player_name'></h1>
-            <h3 id='player_height'></h3>
-            <h3 id='player_shirt_number'></h3>
+            <div id='player_picture'></div>
+            <h3 id='player_height' class='player_profile_item'></h3>
+            <h3 id='player_shirt_number' class='player_profile_item'></h3>
+            <h3 id='player_position' class='player_profile_item'></h3>
+            <br>
+            <h3 id='player_shirt_color' class='player_profile_item'></h3>
+            
             <h3 id='player_club'></h3>
-            <h3 id='player_shirt_color'></h3>
-            <h3 id='player_position'></h3>
 
+          
             <script>
                 window.player_id = "{% print(player_id) %}";
             </script>

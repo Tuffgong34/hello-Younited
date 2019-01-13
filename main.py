@@ -61,6 +61,13 @@ def js_get(path):
         return render_template('404.html'), 404
     return send_file(fn)
 
+@app.route('/img/<path:path>')
+def image_get(path):
+    fn = 'img/' + path
+    if not isfile(fn):
+        return render_template('404.html'), 404
+    return send_file(fn)
+
 @app.route('/logout')
 def show_logged_out():
     rand = None
