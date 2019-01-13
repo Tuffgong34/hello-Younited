@@ -1,7 +1,10 @@
 body{
     font-family: arial;
-    background-color: grey;
+    background-color: black;
     color: white;
+    background-image: url('/img/background.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 h1{
