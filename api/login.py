@@ -22,7 +22,7 @@ def post_login():
     if data is None or len(data)==0:
         data = request.get_json(force=True)
 
-    username = data.get('username')
+    username = data.get('username').lower().replace(' ', '')
     if username is None:
         return jsonify(status='fail', message='must provide a username')
 
