@@ -10,6 +10,7 @@ function update_division_list(data){
     });
 
     var output = "<div class='row club_sub align-items-center'>";
+    output += "    <span class='col-lg-1 col-md-1 col-sm-1 club_header_span'><b>Pos</b></span>";
     output += "    <span class='col-lg-2 col-md-2 col-sm-2 club_header_span'><b>Kit</b></span>";
     output += "    <span class='col-lg-2 col-md-2 col-sm-2 club_header_span'><b>Name</b></span>";
     output += "    <span class='col-lg-1 col-md-1 col-sm-1 club_header_span'><b>Win</b></span>";
@@ -23,6 +24,7 @@ function update_division_list(data){
     for(var i=0; i<club_data.length; i++){
         var c = club_data[i];
         var next_item = "<div class='row club_sub  align-items-center' onclick='load_club(" + c.id + ")'>";
+        next_item += "<div class='col-lg-1 col-md-1 col-sm-1 club_header_span'>" + (i+1) + "</div>";
         next_item += "<div class='col-lg-2 col-md-2 col-sm-2'>";
         if(c.home_shirt != undefined && c.home_shirt!=null){
             next_item += get_shirt_span(c.home_shirt)
