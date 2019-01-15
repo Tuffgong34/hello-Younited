@@ -5,11 +5,14 @@ import json
 from utils.dbutils import get_db_session
 import utils.utils as utils
 import bcrypt
+
 from db.user import User
 from db.league import League
 from db.club import Club
 from db.division import Division
 from db.shirt import Shirt
+from db.match import Match
+from db.result_cache import ResultCache
 
 import random 
 import smtplib 
@@ -163,14 +166,38 @@ def get_division_data(div_id):
 
     clubs_out = []
     for c in clubs:
+        rc = session.query(ResultCache).filter_by(competition_id=division.display_competition_id).filter_by(club_id=c.id).first()
+        if rc is None:
+            next_rc = {
+                "win": 0,
+                "loss": 0,
+                "draw": 0,
+                "points": 0,
+                "goals_against": 0,
+                "goals_for": 0,
+                "goal_difference": 0
+            }
+        else:
+            next_rc = {
+                "win": rc.win,
+                "loss": rc.loss,
+                "draw": rc.draw,
+                "points": rc.points,
+                "goals_against": rc.goals_against,
+                "goals_for": rc.goals_for,
+                "goal_difference": rc.goal_difference
+            }
+
         next_club = {
             "id": c.id,
             "name": c.name,
             "contact": c.contact,
             "location": c.location,
             "founded": c.founded,
-            "information": c.information
+            "information": c.information,
+            "rc": next_rc
         }
+        # home_matches = session.query(Match).filter_by(home_club_id)
         if c.home_shirt_id is not None:
             shirt = session.query(Shirt).filter_by(id=c.home_shirt_id).first()
             if shirt is not None:

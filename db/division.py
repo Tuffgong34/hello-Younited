@@ -13,6 +13,7 @@ class Division(Base):
     description = Column(String(250))
     league_id = Column(Integer)
     founded = Column(TIMESTAMP)
+    display_competition_id = Column(Integer)
 
     def __init__(self, name, league):
         self.name = name

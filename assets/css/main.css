@@ -7,6 +7,7 @@ body{
     background-size: cover;
     background-position: center;
     min-height: 100%;
+    box-sizing: content-box;
 }
 
 h1{
@@ -19,7 +20,7 @@ h1{
     font-size: 80%;
     height: 50px;
     line-height: 50px;
-    padding-left: 20px;
+    /* padding-left: 20px; */
     border-radius: 5px;
     background-color: #2f2f2f;
 }
@@ -54,10 +55,10 @@ h1{
 .club_sub{
     cursor: pointer;
     padding: 2px;
-    padding-left: 20px;
-    margin-left: 10px;
+    /* padding-left: 20px; */
+    /* margin-left: 10px; */
     margin-bottom: 10px;
-    border-radius: 5px;
+    /* border-radius: 5px; */
     background-color: #3b3b3b;
 }
 .club_sub:hover{
@@ -129,4 +130,8 @@ h1{
     /* padding-right: 5px; */
     background-color: #3b3b3b;
     border-radius: 5px;
+}
+.club_header_span{
+    text-align: center;
+    /* display: inline-block; */
 }
