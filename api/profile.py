@@ -66,10 +66,19 @@ def get_profile_data():
             "name": "Shirt Design",
             "link": "/admin/shirt"
         })
+    
+    menu_items.append({
+        "name": "Matches",
+        "link": "/match"
+    })
+    
+
+    # Logout should be last
     menu_items.append({
         "name": "Log out",
         "link": "/logout"
     })
+    
     data_obj = {
         "firstname": user.first_name,
         "lastname": user.last_name,

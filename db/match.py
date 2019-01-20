@@ -12,12 +12,13 @@ class Match(Base):
     away_club_id = Column(Integer)
     played = Column(TIMESTAMP)
     created_at = Column(TIMESTAMP) 
-
+    competition_id = Column(Integer)
+    
     def __init__(self, home_club_id, away_club_id):
         self.home_club_id = home_club_id
         self.away_club_id = away_club_id
 
     def __repr__(self):
-        return '<Match {} vs {} at {}>'.format(self.home_club_id, self.away_club_id, self.shirt_number)
+        return '<Match {} vs {} at {}>'.format(self.home_club_id, self.away_club_id, self.played)
 
   
