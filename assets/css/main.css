@@ -135,3 +135,42 @@ h1{
     text-align: center;
     /* display: inline-block; */
 }
+.match_section{
+    cursor: pointer;
+    padding: 5px;
+    /* padding-left: 20px; */
+    /* margin-left: 10px; */
+    margin-bottom: 10px;
+    /* border-radius: 5px; */
+    background-color: #3b3b3b;
+}
+.match_section:hover{
+    background-color: #888888;
+}
+.match_overview{
+    width: 100%;
+    text-align: center;
+}
+.match_club_div{
+    text-align: center;
+    display: inline-block;
+    /* cursor: pointer; */
+    padding: 15px;
+    /* padding-left: 20px; */
+    /* margin-left: 10px; */
+    margin-bottom: 10px;
+    border-radius: 5px;
+    background-color: #3b3b3b;
+}
+.goal_div{
+    cursor: pointer;
+    padding: 20px;
+    /* padding-left: 20px; */
+    /* margin-left: 10px; */
+    margin-bottom: 10px;
+    border-radius: 5px;
+    background-color: #3b3b3b;
+}
+.goal_div:hover{
+    background-color: #888888;
+}
