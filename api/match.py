@@ -10,6 +10,8 @@ from db.club import Club
 from db.event import Event
 from db.player import Player
 from db.event_type import EventType
+from db.shirt import Shirt
+
 
 import utils.utils as utils
 from utils.dbutils import get_db_session
@@ -76,6 +78,17 @@ def get_name_of_event(session, event_id):
         return "Unknown"
     return ev.name
 
+def get_shirt_for_id(session, home_shirt_id):
+    shirt = session.query(Shirt).filter_by(id=home_shirt_id).first()
+    if shirt is None:
+        return {}
+    shirt_val = {
+        'id': shirt.id,
+        'style': shirt.style,
+        'primary_color': shirt.primary_color,
+        'secondary_color': shirt.secondary_color
+    }
+    return shirt_val
 
 @match_api_routes.route('/api/match/<int:matchid>', methods=['GET'])
 def get_match_by_id(matchid):
@@ -127,11 +140,13 @@ def get_match_by_id(matchid):
     
     home_club_data = {
         'name': home_club.name,
-        'goals': []        
+        'goals': [],
+        'logo': home_club.logo_filename       
     }
     away_club_data = {
         'name': away_club.name,
-        'goals': []
+        'goals': [],
+        'logo': away_club.logo_filename
     }
 
     events = session.query(Event).filter_by(match_id=matchid).order_by(Event.occurred_at).all()
@@ -140,14 +155,27 @@ def get_match_by_id(matchid):
         if event.event_type_id == 1:
             player = session.query(Player).filter_by(id=event.player_1_id).first()
             if player is None:
-                return jsonify("Failed to find player {}".format(event.player_1_id))
+                return jsonify(status='fail', message="Failed to find player {}".format(event.player_1_id))
+            club = session.query(Club).filter_by(id=player.club_id).first()
+            if club is None:
+                return jsonify(status='fail', message='Failed to find club {}'.format(player.club_id))
+            shirt = {}
+            if club.home_shirt_id is not None:
+                shirt = get_shirt_for_id(session, club.home_shirt_id)
+            club_info = {
+                'name': club.name,
+                'shirt': shirt,
+                'club': club.logo_filename
+            }
+            
             next_goal = {
                 'type': 'Goal',
                 'scorer': "{} {}".format(player.first_name, player.last_name),
                 'scorer_id': player.id,
                 'time': event.occurred_at,
                 'support': None,
-                'support_id': None
+                'support_id': None,
+                'club': club_info
             }
             if event.player_2_id is not None:
                 support = session.query(Player).filter_by(id=event.player_2_id).first()
@@ -163,6 +191,7 @@ def get_match_by_id(matchid):
         else:
             # TODO: Add in shirt details for front end
             p1 = None
+            club_data = None
             if event.player_1_id is not None:
                 playr = session.query(Player).filter_by(id=event.player_1_id).first()
                 if playr is None:
@@ -171,6 +200,17 @@ def get_match_by_id(matchid):
                     'id': playr.id,
                     'name': "{} {}".format(playr.first_name, playr.last_name)
                 }
+                club = session.query(Club).filter_by(id=playr.club_id).first()
+                if club is not None:
+                    shirt = {}
+                    if club.home_shirt_id is not None:
+                        shirt = get_shirt_for_id(session, club.home_shirt_id)
+                    club_data = {
+                        'name': club.name,
+                        'shirt': shirt,
+                        'logo': club.logo_filename
+                    }
+
             p2 = None
             if event.player_2_id is not None:
                 playr = session.query(Player).filter_by(id=event.player_2_id).first()
@@ -180,11 +220,12 @@ def get_match_by_id(matchid):
                     'id': playr.id,
                     'name': "{} {}".format(playr.first_name, playr.last_name)
                 }
-
+            
             next_event = {
                 'type': get_name_of_event(session, event.event_type_id),
                 'time': event.occurred_at,
                 'player': p1,
+                'club': club_data,
                 'other_player': p2,
                 'information': event.information
             }

@@ -53,6 +53,9 @@ $(document).ready(function(){
                         output += "<div style='display:inline-block;background-color:white; margin-right:10px;'>";
                         output += "<img src='/img/goal_icon.png' style='width: 50px'>";
                         output += "</div>";
+                        if(event.club != null && event.club.shirt != null){
+                            output += get_shirt_span(event.club.shirt);
+                        }
                         output += event.scorer + " - " + event.time;
                         output += "</div>";
                     }else if(event.type=='Kick-off' || event.type=='Full-time'){
@@ -60,6 +63,9 @@ $(document).ready(function(){
                         output += "<div style='display:inline-block;background-color:white; margin-right:10px;'>";
                         output += "<img src='/img/kick_off.png' style='width: 50px'>";
                         output += "</div>";
+                        if(event.club != null && event.club.shirt != null){
+                            output += get_shirt_span(event.club.shirt);
+                        }
                         output +=  event.type + " @ " + event.time;
                         output += "</div>";
                     }else if(event.type=='Yellow Card'){
@@ -67,6 +73,9 @@ $(document).ready(function(){
                         output += "<div style='display:inline-block;background-color:white; margin-right:10px; width:50px; text-align: center;'>";
                         output += "<img src='/img/yellow_card.png' style='max-width: 50px; max-height: 50px;'>";
                         output += "</div>";
+                        if(event.club != null && event.club.shirt != null){
+                            output += get_shirt_span(event.club.shirt);
+                        }
                         output +=  event.player.name + " @ " + event.time; 
                         output += "</div>";
                     }else if(event.type=='Red Card'){
@@ -74,6 +83,9 @@ $(document).ready(function(){
                         output += "<div style='display:inline-block;background-color:white; margin-right:10px; width:50px;'>";
                         output += "<img src='/img/red_card.jpg' style='width: 50px'>";
                         output += "</div>";
+                        if(event.club != null && event.club.shirt != null){
+                            output += get_shirt_span(event.club.shirt);
+                        }
                         output +=  event.player.name + " @ " + event.time; 
                         output += "</div>";
                     }else if(event.type=='Foul'){
@@ -81,6 +93,9 @@ $(document).ready(function(){
                         output += "<div style='display:inline-block;background-color:white; margin-right:10px; width:50px;'>";
                         output += "<img src='/img/foul.png' style='width: 50px'>";
                         output += "</div>";
+                        if(event.club != null && event.club.shirt != null){
+                            output += get_shirt_span(event.club.shirt);
+                        }
                         output +=  event.player.name + " @ " + event.time; 
                         output += "</div>";
                     }else if(event.type=='Penalty'){
@@ -88,6 +103,9 @@ $(document).ready(function(){
                         output += "<div style='display:inline-block;background-color:white; margin-right:10px; width:50px;'>";
                         output += "<img src='/img/penalty.jpg' style='width: 50px'>";
                         output += "</div>";
+                        if(event.club != null && event.club.shirt != null){
+                            output += get_shirt_span(event.club.shirt);
+                        }
                         output +=  event.player.name + " @ " + event.time; 
                         output += "</div>";
                     }
