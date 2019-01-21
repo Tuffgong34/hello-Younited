@@ -47,7 +47,7 @@ $(document).ready(function(){
                 
                 for(var i=0; i<all_events.length;i++){
                     var event = all_events[i];
-                    console.log(event)
+                    // console.log(event)
                     if(event.type=='Goal'){
                         output += "<div class='goal_div' onclick='load_player(" + event.scorer_id + ")'>";
                         output += "<div style='display:inline-block;background-color:white; margin-right:10px;'>";
