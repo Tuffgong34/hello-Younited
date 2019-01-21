@@ -39,7 +39,7 @@ $(document).ready(function(){
                             next_item += shirt;
                         }
                         next_item += p.first_name + " " + p.last_name;
-                        console.log(p);
+                        // console.log(p);
                         if(p.shirt_number == undefined){
                             p.shirt_number = 0;
                         }

@@ -12,7 +12,6 @@ from db.player import Player
 from db.event_type import EventType
 from db.shirt import Shirt
 
-
 import utils.utils as utils
 from utils.dbutils import get_db_session
 
@@ -71,24 +70,6 @@ def get_matches():
                 match.away_club_id
             ))
     return jsonify(status='ok', data=data)
-
-def get_name_of_event(session, event_id):
-    ev = session.query(EventType).filter_by(id=event_id).first()
-    if ev is None:
-        return "Unknown"
-    return ev.name
-
-def get_shirt_for_id(session, home_shirt_id):
-    shirt = session.query(Shirt).filter_by(id=home_shirt_id).first()
-    if shirt is None:
-        return {}
-    shirt_val = {
-        'id': shirt.id,
-        'style': shirt.style,
-        'primary_color': shirt.primary_color,
-        'secondary_color': shirt.secondary_color
-    }
-    return shirt_val
 
 @match_api_routes.route('/api/match/<int:matchid>', methods=['GET'])
 def get_match_by_id(matchid):
@@ -161,7 +142,7 @@ def get_match_by_id(matchid):
                 return jsonify(status='fail', message='Failed to find club {}'.format(player.club_id))
             shirt = {}
             if club.home_shirt_id is not None:
-                shirt = get_shirt_for_id(session, club.home_shirt_id)
+                shirt = utils.get_shirt_for_id(session, club.home_shirt_id)
             club_info = {
                 'name': club.name,
                 'shirt': shirt,
@@ -204,7 +185,7 @@ def get_match_by_id(matchid):
                 if club is not None:
                     shirt = {}
                     if club.home_shirt_id is not None:
-                        shirt = get_shirt_for_id(session, club.home_shirt_id)
+                        shirt = utils.get_shirt_for_id(session, club.home_shirt_id)
                     club_data = {
                         'name': club.name,
                         'shirt': shirt,
@@ -222,7 +203,7 @@ def get_match_by_id(matchid):
                 }
             
             next_event = {
-                'type': get_name_of_event(session, event.event_type_id),
+                'type': utils.get_name_of_event(session, event.event_type_id),
                 'time': event.occurred_at,
                 'player': p1,
                 'club': club_data,
@@ -259,11 +240,3 @@ def post_match():
     played_date = data['played_date']
     match = Match()
     return jsonify(status='ok')
-
-
-
-
-def update_results_cache():
-    # Update the results cache and league standing
-    pass
-

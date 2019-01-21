@@ -12,6 +12,7 @@ from db.division import Division
 from db.player import Player
 from db.position import Position
 from db.shirt import Shirt
+from db.match import Match
 
 import random 
 import smtplib 
@@ -121,9 +122,34 @@ def get_club_data(club_id):
             "position": next_position
         }
         players_out.append(next_player)
+
+    matches = utils.get_match_data(session, club.id)
+    match_info = []
+    for match in matches:
+        if match.home_club_id != club.id:
+            other_club = session.query(Club).filter_by(id=match.home_club_id).first()
+        else:
+            other_club = session.query(Club).filter_by(id=match.away_club_id).first()
+        other_club_info = {
+            'name': other_club.name,
+            'id': other_club.id,
+            'logo': other_club.logo_filename
+        }
+        
+        # TODO: Grab result cache item instead of all events
+        events = utils.get_all_events(session, match.id)
+        next_match = {
+            'id': match.id,
+            'other_club': other_club_info,
+            'played': match.played,
+            'events': events
+        }
+        match_info.append(next_match)
+
     data_obj = {
         "club": club_out,
-        "players": players_out
+        "players": players_out,
+        "matches": match_info
     }
        
     return jsonify(status='ok', data=data_obj)

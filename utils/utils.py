@@ -4,6 +4,12 @@ import jwt
 from flask import request
 from utils.dbutils import get_db_session
 from db.user import User
+from db.match import Match
+from db.event import Event
+from db.event_type import EventType
+from db.player import Player
+
+from sqlalchemy import or_
 
 global_app = None
 global_secret = None
@@ -104,3 +110,59 @@ def check_auth_admin(func):
         func()
 
     return wrapper
+
+def get_name_of_event(session, event_id):
+    ev = session.query(EventType).filter_by(id=event_id).first()
+    if ev is None:
+        print("Unknown id for event {}".format(event_id))
+        return "Unknown"
+    return ev.name
+
+def get_shirt_for_id(session, home_shirt_id):
+    shirt = session.query(Shirt).filter_by(id=home_shirt_id).first()
+    if shirt is None:
+        return {}
+    shirt_val = {
+        'id': shirt.id,
+        'style': shirt.style,
+        'primary_color': shirt.primary_color,
+        'secondary_color': shirt.secondary_color
+    }
+    return shirt_val
+
+
+def get_match_data(session, club_id):
+    # Get the last 10 matches for the given club id
+    matches = session.query(Match).filter(or_(Match.home_club_id==club_id, Match.away_club_id==club_id)) 
+    #.order_by(Match.played)
+    return matches
+
+def get_player_info(session, player_id):
+    if player_id is None:
+        return None
+    player = session.query(Player).filter_by(id=player_id).first()
+    if player is None:
+        print("ERROR: player {} not found".format(player_id))
+        return None
+    retval = {
+        'name': "{} {}".format(player.first_name, player.last_name),
+        'shirt_number': player.shirt_number,
+        'id': player.id,
+        'club_id': player.club_id
+    }
+    return retval
+
+def get_all_events(session, match_id):
+    events = session.query(Event).filter_by(match_id=match_id).all()
+    retval = []
+    for ev in events:
+        t = get_name_of_event(session, ev.event_type_id)
+        next_ev = {
+            'type': t,
+            'occurred_at': ev.occurred_at,
+            'player_1': get_player_info(session, ev.player_1_id),
+            'player_2': get_player_info(session, ev.player_2_id),
+            'information': ev.information
+        }
+        retval.append(next_ev)
+    return retval
