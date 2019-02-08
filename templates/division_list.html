@@ -1,0 +1,38 @@
+<html>
+    <head>
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+
+        {% if random %}
+            <link rel='stylesheet' type='text/css' href='/css/main.css?t={% print(random) %}'>
+            <script type='text/javascript' src='/js/login_handler.js?t={% print(random) %}'></script>
+            <script type='text/javascript' src='/js/division_list.js?t={% print(random) %}'></script>
+            <script type='text/javascript' src='/js/profile.js?t={% print(random) %}'></script>
+            <script type='text/javascript' src='/js/yn_cookies.js?t={% print(random) %}'></script>
+        {% else %}
+            <link rel='stylesheet' type='text/css' href='/css/main.css'>
+            <script type='text/javascript' src='/js/login_handler.js'></script>
+            <script type='text/javascript' src='/js/division_list.js'></script>   
+            <script type='text/javascript' src='/js/profile.js'></script>   
+            <script type='text/javascript' src='/js/yn_cookies.js'></script>         
+        {% endif %}
+    </head>
+
+    <body>
+        <div id='menu_options'></div>
+        <h1 id=''>Divisions</h1>
+        <h2>
+            Filter <input id='search_criteria' style='margin-left: 10px;'>
+        </h2>
+        
+        <div style='color: red' id='error'></div>
+        <div id='division_count'></div>
+        <div id='page_update'></div>
+        <div id='division_list_output'>
+                Loading...
+        </div>   
+        <button onclick='prev_tab()'>Previous</button>
+        <button onclick='next_tab()'>Next</button>
+    </body>
+</html>

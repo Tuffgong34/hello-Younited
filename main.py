@@ -18,6 +18,7 @@ from pages.admin import admin_page_routes
 from pages.leagues import league_page_routes
 from pages.club import club_page_routes
 from pages.match import match_page_routes
+from pages.divisions import division_page_routes
 
 app = Flask(__name__)
 utils.set_app(app)
@@ -35,6 +36,7 @@ app.register_blueprint(league_page_routes)
 app.register_blueprint(profile_page_routes)
 app.register_blueprint(club_page_routes)
 app.register_blueprint(match_page_routes)
+app.register_blueprint(division_page_routes)
 
 @app.route('/')
 @app.route('/index.html')

@@ -5,6 +5,7 @@ import json
 from utils.dbutils import get_db_session
 import utils.utils as utils
 import bcrypt
+from sqlalchemy import func 
 
 from db.user import User
 from db.league import League
@@ -230,4 +231,66 @@ def get_division_data(div_id):
         "clubs": clubs_out
     }
        
+    return jsonify(status='ok', data=data_obj)
+
+@league_api_routes.route('/api/divisions', methods=['POST'])
+def get_division_list():
+    key = request.headers.get('Authorization')
+    if key is None:
+        return jsonify(status='fail', message='no token provided')
+    
+    token = key.split(" ")[1]
+    if token is None:
+        return jsonify(status='fail', message='failed token check')
+    
+    decode = utils.decode_jwt_token(token)
+
+    if decode['username'] is None:
+        return jsonify(status='fail', message='failed token check')
+    username = decode['username']
+  
+    allowed_status = ['user', 'admin', 'sadmin']
+
+    session = get_db_session()
+    user = session.query(User).filter_by(email=username).first()
+    if user is None:
+        user = session.query(User).filter_by(phone_number=username).first()
+ 
+    if user is None:
+        return jsonify(status='fail', message='user does not exist')
+    
+    if user.status not in allowed_status:
+        print("ERROR: Attempt to use disabled account (id:{} - name:{} - status: {})".format(user.id, user.name, user.status))
+        return jsonify(status='fail', message='account has been disabled')
+    
+    data = request.values
+    if data is None or len(data)==0:
+        data = request.get_json(force=True)
+    if data is None:
+        return jsonify(status='fail', message='message body was blank')
+    
+    prompt = data['prompt']
+    offset = data['offset']
+    if prompt != "":
+        divisions = session.query(Division).filter(Division.name.ilike("%{}%".format(prompt))).offset(offset).limit(20).all()
+    else:
+        divisions = session.query(Division).order_by(Division.name).offset(offset).limit(20).all()
+
+    if divisions is None:
+        return jsonify(status='fail', message='no divisions found')
+
+    div_out = []
+    for division in divisions:
+        next_div = {
+            "name": division.name,
+            "id": division.id
+        }
+        div_out.append(next_div)
+
+    rows = session.query(func.count(Division.id)).scalar()
+    data_obj = {
+        "division_count": rows,
+        "divisions": div_out
+    }
+
     return jsonify(status='ok', data=data_obj)

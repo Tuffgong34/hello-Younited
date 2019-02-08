@@ -53,8 +53,8 @@ def get_profile_data():
             "link": "/profile"
         },
         {
-            "name": "Leagues",
-            "link": "/league"
+            "name": "Divisions",
+            "link": "/division"
         }
     ]
     if user.status == "sadmin":
